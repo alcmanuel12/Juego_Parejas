@@ -9,7 +9,7 @@ public class JuegoParejas {
         System.out.println("Escriba 16 números para rellenar el tablero.");
         System.out.println("Cada número debe estar entre 1 y 8, y repetirse exactamente dos veces.");
         Scanner pedirNumero = new Scanner(System.in);
-        int[] contador = new int[9]; // Array para contar las repeticiones de cada número (1-8)
+        int[] contador = new int[9];
 
         for (int i = 0; i < filas; i++) {
             for (int j = 0; j < columnas; j++) {
@@ -27,7 +27,6 @@ public class JuegoParejas {
                 }
             }
         }
-        pedirNumero.close(); // Cerrar el Scanner
     }
 
     public static void chequearNumeros(int[][] tablero) {
@@ -36,11 +35,11 @@ public class JuegoParejas {
 
         System.out.println("Introduce la fila y columna del primer número: ");
         fila1 = scanner.nextInt();
-        columna1 = scanner.nextInt();
+        columna1 = scanner.nextInt()-1;
 
         System.out.println("Introduce la fila y columna del segundo número: ");
         fila2 = scanner.nextInt();
-        columna2 = scanner.nextInt();
+        columna2 = scanner.nextInt()-1;
 
         if (tablero[fila1][columna1] == tablero[fila2][columna2]) {
             System.out.println("¡Correcto! Los números son iguales.");
@@ -51,6 +50,6 @@ public class JuegoParejas {
     }
     public static void main(String[] args) {
         RellenarArray();
-        chequearNumeros(null);
+        chequearNumeros(tablero);
     }
 }

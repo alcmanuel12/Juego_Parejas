@@ -1,8 +1,6 @@
 import java.util.Scanner;
-import java.util.Scanner;
 
-public class JuegoPareja {
-
+public class JuegoParejas {
     public static int filas = 4;
     public static int columnas = 4;
     private static int[][] tablero = new int[filas][columnas]; // Tablero como variable de instancia
@@ -11,7 +9,7 @@ public class JuegoPareja {
         System.out.println("Escriba 16 números para rellenar el tablero.");
         System.out.println("Cada número debe estar entre 1 y 8, y repetirse exactamente dos veces.");
         Scanner pedirNumero = new Scanner(System.in);
-        int[] contador = new int[9]; // Array para contar las repeticiones de cada número (1-8)
+        int[] contador = new int[9];
 
         for (int i = 0; i < filas; i++) {
             for (int j = 0; j < columnas; j++) {
@@ -29,21 +27,29 @@ public class JuegoPareja {
                 }
             }
         }
-        pedirNumero.close(); // Cerrar el Scanner
     }
 
-    public static void imprimirTablero() {
-        System.out.println("Tablero rellenado:");
-        for (int i = 0; i < filas; i++) {
-            for (int j = 0; j < columnas; j++) {
-                System.out.print(tablero[i][j] + " ");
-            }
-            System.out.println();
+    public static void chequearNumeros(int[][] tablero) {
+        Scanner scanner = new Scanner(System.in);
+        int fila1, columna1, fila2, columna2;
+
+        System.out.print("Introduce la fila y columna del primer número: ");
+        fila1 = scanner.nextInt();
+        columna1 = scanner.nextInt()-1;
+
+        System.out.print("Introduce la fila y columna del segundo número: ");
+        fila2 = scanner.nextInt();
+        columna2 = scanner.nextInt()-1;
+
+        if (tablero[fila1][columna1] == tablero[fila2][columna2]) {
+            System.out.print("¡Correcto! Los números son iguales.");
+        } else {
+            System.out.print("Incorrecto. Los números no son iguales.");
         }
+        scanner.close();
     }
-
     public static void main(String[] args) {
         RellenarArray();
-        imprimirTablero();
+        chequearNumeros(tablero);
     }
 }

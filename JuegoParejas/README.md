@@ -1,18 +1,12 @@
-## Getting Started
+funcion pedir 16 numeros por scanner y se guarden en la matriz
+-solo se pueden los numeros del 1 al 8
+-cada numero solo se repite dos veces
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+chequear numeros
+-deja ver 2 posiciones
 
-## Folder Structure
-
-The workspace contains two folders by default, where:
-
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
-
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
-
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
-
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+dar solucion
+-pide 2 posiciones de la matriz por scanner
+-chequea si es correcto
+    -actualiza array tablero
+    -actualiza array puntuacion

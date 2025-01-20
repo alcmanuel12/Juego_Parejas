@@ -11,8 +11,6 @@ public class Juego {
 
     //Aqui se imprime por pantalla el numero que hay en la posicion que hemos marcado antes
     System.out.println("En la fila " + fila + " columna " + columna + "esta el numero: " + tablero[fila][columna]);
-    
-    
     }
 }
 

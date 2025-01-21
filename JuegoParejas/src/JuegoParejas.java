@@ -116,7 +116,7 @@ public class JuegoParejas {
         // Bucle principal del juego
         while (true) {
             chequearNumeros(puntuaciones, jugadorActual); // Turno del jugador actual
-            if (contarPuntuaciones(puntuaciones[jugadorActual]) == 4) { // Comprobar si el jugador ha ganado
+            if (contarPuntuaciones(puntuaciones[jugadorActual]) == 5) { // Comprobar si el jugador ha ganado
                 System.out.println("¡Felicidades Jugador " + (jugadorActual + 1) + "! Has ganado el juego.");
                 break; // Salir del bucle si hay un ganador
             }

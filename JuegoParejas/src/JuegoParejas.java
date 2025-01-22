@@ -71,8 +71,16 @@ public class JuegoParejas {
 					fila2 = checker.nextInt() - 1;
 					columna2 = checker.nextInt() - 1;
 					System.out.println("Has destapado el número " + tablero[fila2][columna2]);
+					
+					boolean yaSeleccionado = false;
+					for (int i = 0; i < puntuacionJugador1.length; i++) {
+						if (tablero[fila1][columna1] == puntuacionJugador1[i] || tablero[fila2][columna2] == puntuacionJugador1[i]) {
+							System.out.println("Este número ya ha sido resuelto.");
+							yaSeleccionado = true;
+						} 
+					}
 
-					if (tablero[fila1][columna1] == tablero[fila2][columna2]) {
+					if (tablero[fila1][columna1] == tablero[fila2][columna2] && yaSeleccionado == false) {
 						System.out.println("¡Correcto! Los números son iguales.");
 						System.out.println("-------------------------------------");
 						tableroVisible[fila1][columna1] = "0";
@@ -88,9 +96,10 @@ public class JuegoParejas {
 							juegoEnCurso = false;
 						}
 					} else {
-						System.out.println("Incorrecto. Los números no son iguales. Pierdes el turno.");
+						System.out.println("Incorrecto. Los números no son iguales o ya han sido seleccionados. Pierdes el turno.");
 						System.out.println("-------------------------------------");
 						turno1 = false;
+						yaSeleccionado = false;
 					}
 
 				} catch (Exception e) {
@@ -111,8 +120,17 @@ public class JuegoParejas {
 					fila2 = checker.nextInt() - 1;
 					columna2 = checker.nextInt() - 1;
 					System.out.println("Has destapado el número " + tablero[fila2][columna2]);
-
-					if (tablero[fila1][columna1] == tablero[fila2][columna2]) {
+					
+					
+					boolean yaSeleccionado = false;
+					for (int i = 0; i < puntuacionJugador2.length; i++) {
+						if (tablero[fila1][columna1] == puntuacionJugador2[i] || tablero[fila2][columna2] == puntuacionJugador2[i]) {
+							System.out.println("Este número ya ha sido resuelto.");
+							yaSeleccionado = true;
+						} 
+					}
+					
+					if (tablero[fila1][columna1] == tablero[fila2][columna2] && yaSeleccionado == false) {
 						System.out.println("¡Correcto! Los números son iguales.");
 						System.out.println("-------------------------------------");
 						tableroVisible[fila1][columna1] = "0";
@@ -128,9 +146,10 @@ public class JuegoParejas {
 							juegoEnCurso = false;
 						}
 					} else {
-						System.out.println("Incorrecto. Los números no son iguales. Pierdes el turno.");
+						System.out.println("Incorrecto. Los números no son iguales o ya han sido seleccionados. Pierdes el turno.");
 						System.out.println("-------------------------------------");
 						turno1 = true;
+						yaSeleccionado = false;
 					}
 
 				} catch (Exception e) {

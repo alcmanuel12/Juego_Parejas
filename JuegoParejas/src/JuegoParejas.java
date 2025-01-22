@@ -1,28 +1,38 @@
 import java.util.Scanner;
 
-public class JuegoParejas {
-    // Definición de las dimensiones del tablero
+public final class JuegoParejas {
+    // Bloque de declaración de variables
+    // Variables estáticas globales para el juego
+    //Declaración de variables: Define las variables estáticas globales que se utilizan en el juego.
     public static int filas = 4;
     public static int columnas = 4;
-    // Tablero del juego representado como una matriz 2D
     private static int[][] tablero = new int[filas][columnas];
+    private static String[][] tableroVisible = new String[filas][columnas];
+    private static int[] puntuacionJugador1 = new int[8];
+    private static int[] puntuacionJugador2 = new int[8];
+    private static int fila1, columna1, fila2, columna2;
+    private static boolean juegoEnCurso = true;
+    private static boolean turno1 = true;
+    private static int puntosJugador1 = 0;
+    private static int puntosJugador2 = 0;
 
+    // Bloque de inicialización del tablero
     // Método para rellenar el tablero con números proporcionados por el usuario
+    //Inicialización del tablero: Método RellenarArray para rellenar el tablero con números proporcionados por el usuario.
     public static void RellenarArray() {
-        System.out.println("¡Hola Game Master! Bienvenido al juego de las parejas. Rellena el tablero como consideres.");
-        System.out.println("Escribe 16 números para rellenarlo.");
+        System.out.println("Escriba 16 números para rellenar el tablero.");
         System.out.println("Cada número debe estar entre 1 y 8, y repetirse exactamente dos veces.");
         Scanner pedirNumero = new Scanner(System.in);
-        int[] contador = new int[9]; // Array para contar las repeticiones de cada número
+        int[] contador = new int[9];
 
-        // Bucle para rellenar el tablero
         for (int i = 0; i < filas; i++) {
             for (int j = 0; j < columnas; j++) {
+                tableroVisible[i][j] = "X";
                 boolean valido = false;
                 while (!valido) {
                     System.out.print("Introduce el número para la posición [" + i + "][" + j + "]: ");
                     int numero = pedirNumero.nextInt();
-                    // Validar que el número esté entre 1 y 8 y no se haya repetido más de dos veces
+
                     if (numero >= 1 && numero <= 8 && contador[numero] < 2) {
                         tablero[i][j] = numero;
                         contador[numero]++;
@@ -33,94 +43,163 @@ public class JuegoParejas {
                 }
             }
         }
+        mostrarTablero();
     }
 
-    // Método para que los jugadores seleccionen y comparen números en el tablero
-    public static void chequearNumeros(int[][] puntuaciones, int jugadorActual) {
-        Scanner scanner = new Scanner(System.in);
-        int fila1, columna1, fila2, columna2;
-        boolean casillaValida;
-
-        System.out.println("Turno del jugador " + (jugadorActual + 1));
-        System.out.println("Ahora puedes elegir dos casillas para ver si los números que contiene son iguales. Recuerda que la primera casilla es la 1 1");
-        mostrarTablero();
-
-        // Selección de la primera casilla
-        do {
-            System.out.print("Introduce la fila y columna del primer número siguiendo el formato NumeroFila NumeroColumna, p.e. 1 1: ");
-            fila1 = scanner.nextInt() - 1;
-            columna1 = scanner.nextInt() - 1;
-            casillaValida = fila1 >= 0 && fila1 < filas && columna1 >= 0 && columna1 < columnas && tablero[fila1][columna1] != 0;
-            if (!casillaValida) {
-                System.out.println("Posición no válida o ya destapada. Inténtalo de nuevo.");
-            }
-        } while (!casillaValida);
-
-        // Selección de la segunda casilla
-        do {
-            System.out.print("Introduce la fila y columna del segundo número siguiendo el formato NumeroFila NumeroColumna, p.e. 1 1: ");
-            fila2 = scanner.nextInt() - 1;
-            columna2 = scanner.nextInt() - 1;
-            casillaValida = fila2 >= 0 && fila2 < filas && columna2 >= 0 && columna2 < columnas && tablero[fila2][columna2] != 0 && !(fila1 == fila2 && columna1 == columna2);
-            if (!casillaValida) {
-                System.out.println("Posición no válida o ya destapada. Inténtalo de nuevo.");
-            }
-        } while (!casillaValida);
-
-        // Comprobación de si los números seleccionados son iguales
-        if (tablero[fila1][columna1] == tablero[fila2][columna2]) {
-            System.out.println("¡Correcto! Los números son iguales.");
-            puntuaciones[jugadorActual][contarPuntuaciones(puntuaciones[jugadorActual])] = 1;
-            tablero[fila1][columna1] = 0; // Sustituir por 'O'
-            tablero[fila2][columna2] = 0; // Sustituir por 'O'
-        } else {
-            System.out.println("Incorrecto. Los números no son iguales.");
-            puntuaciones[jugadorActual][contarPuntuaciones(puntuaciones[jugadorActual])] = 0;
-        }
-
-        mostrarTablero();
-        System.out.println("Puntuaciones: Jugador 1 - " + contarPuntuaciones(puntuaciones[0]) + ", Jugador 2 - " + contarPuntuaciones(puntuaciones[1]));
-    }
-
-    // Método para mostrar el estado actual del tablero
+    // Bloque de visualización del tablero
+    // Método para mostrar el tablero visible
+    // Visualización del tablero: Método mostrarTablero para mostrar el estado actual del tablero visible.
     public static void mostrarTablero() {
+        int contador = 0;
+        System.out.println("\n");
         for (int i = 0; i < filas; i++) {
             for (int j = 0; j < columnas; j++) {
-                if (tablero[i][j] == 0) {
-                    System.out.print("O "); // Mostrar 'O' para casillas destapadas
-                } else {
-                    System.out.print("X "); // Mostrar 'X' para casillas no destapadas
+                System.out.print(tableroVisible[i][j] + " ");
+                contador++;
+                if (contador == 4) {
+                    System.out.print("\n");
+                    contador = 0;
                 }
             }
-            System.out.println();
         }
     }
 
-    // Método para contar las puntuaciones de un jugador
-    public static int contarPuntuaciones(int[] puntuaciones) {
-        int count = 0;
-        for (int puntuacion : puntuaciones) {
-            if (puntuacion == 1) {
-                count++;
+    // Bloque de lógica del juego
+    // Método para chequear los números seleccionados por los jugadores
+    // Lógica del juego: Método chequearNumeros para manejar la lógica del juego, incluyendo la selección de números por los jugadores y la verificación de coincidencias.
+    public static void chequearNumeros(int[][] tablero) {
+        Scanner checker = new Scanner(System.in);
+
+        while (juegoEnCurso) {
+            while (juegoEnCurso && turno1) {
+                System.out.println("\nTURNO JUGADOR 1");
+                try {
+                    System.out.println("-------------------------------------");
+                    System.out.print("Introduce la fila y columna del primer número: ");
+                    fila1 = checker.nextInt() - 1;
+                    columna1 = checker.nextInt() - 1;
+                    System.out.println("Has destapado el número " + tablero[fila1][columna1]);
+
+                    System.out.print("Introduce la fila y columna del segundo número: ");
+                    fila2 = checker.nextInt() - 1;
+                    columna2 = checker.nextInt() - 1;
+                    System.out.println("Has destapado el número " + tablero[fila2][columna2]);
+
+                    boolean yaSeleccionado = false;
+                    for (int i = 0; i < puntuacionJugador1.length; i++) {
+                        if (tablero[fila1][columna1] == puntuacionJugador1[i] || tablero[fila2][columna2] == puntuacionJugador1[i]) {
+                            System.out.println("Este número ya ha sido resuelto.");
+                            yaSeleccionado = true;
+                        }
+                    }
+
+                    if (tablero[fila1][columna1] == tablero[fila2][columna2] && !yaSeleccionado) {
+                        System.out.println("¡Correcto! Los números son iguales.");
+                        System.out.println("-------------------------------------");
+                        tableroVisible[fila1][columna1] = "0";
+                        tableroVisible[fila2][columna2] = "0";
+                        puntuacionJugador1[puntosJugador1] = tablero[fila1][columna1];
+                        puntosJugador1++;
+                        System.out.println("El jugador 1 ahora tiene " + puntosJugador1 + " puntos.\n");
+                        if (puntosJugador1 >= 5) {
+                            juegoEnCurso = false;
+                            System.out.println("¡El jugador 1 gana la partida!");
+                        } else if (puntosJugador1 == 4 && puntosJugador2 == 4) {
+                            System.out.println("¡Empate! Partida terminada.");
+                            juegoEnCurso = false;
+                        }
+                    } else {
+                        System.out.println("Incorrecto. Los números no son iguales o ya han sido seleccionados. Pierdes el turno.");
+                        System.out.println("-------------------------------------");
+                        turno1 = false;
+                        yaSeleccionado = false;
+                    }
+
+                } catch (Exception e) {
+                    System.err.println("Los números deben estar comprendidos entre 1 y 4");
+                }
+                mostrarTablero();
+            }
+            while (juegoEnCurso && !turno1) {
+                System.out.println("\nTURNO JUGADOR 2");
+                try {
+                    System.out.println("-------------------------------------");
+                    System.out.print("Introduce la fila y columna del primer número: ");
+                    fila1 = checker.nextInt() - 1;
+                    columna1 = checker.nextInt() - 1;
+                    System.out.println("Has destapado el número " + tablero[fila1][columna1]);
+
+                    System.out.print("Introduce la fila y columna del segundo número: ");
+                    fila2 = checker.nextInt() - 1;
+                    columna2 = checker.nextInt() - 1;
+                    System.out.println("Has destapado el número " + tablero[fila2][columna2]);
+
+                    boolean yaSeleccionado = false;
+                    for (int i = 0; i < puntuacionJugador2.length; i++) {
+                        if (tablero[fila1][columna1] == puntuacionJugador2[i] || tablero[fila2][columna2] == puntuacionJugador2[i]) {
+                            System.out.println("Este número ya ha sido resuelto.");
+                            yaSeleccionado = true;
+                        }
+                    }
+
+                    if (tablero[fila1][columna1] == tablero[fila2][columna2] && !yaSeleccionado) {
+                        System.out.println("¡Correcto! Los números son iguales.");
+                        System.out.println("-------------------------------------");
+                        tableroVisible[fila1][columna1] = "0";
+                        tableroVisible[fila2][columna2] = "0";
+                        puntuacionJugador2[puntosJugador2] = tablero[fila1][columna1];
+                        puntosJugador2++;
+                        System.out.println("El jugador 2 ahora tiene " + puntosJugador2 + " puntos.\n");
+                        if (puntosJugador2 >= 5) {
+                            juegoEnCurso = false;
+                            System.out.println("¡El jugador 2 gana la partida!");
+                        } else if (puntosJugador1 == 4 && puntosJugador2 == 4) {
+                            System.out.println("¡Empate! Partida terminada.");
+                            juegoEnCurso = false;
+                        }
+                    } else {
+                        System.out.println("Incorrecto. Los números no son iguales o ya han sido seleccionados. Pierdes el turno.");
+                        System.out.println("-------------------------------------");
+                        turno1 = true;
+                        yaSeleccionado = false;
+                    }
+
+                } catch (Exception e) {
+                    System.err.println("Los números deben estar comprendidos entre 1 y 4");
+                }
+                mostrarTablero();
             }
         }
-        return count;
+        checker.close();
     }
 
-    // Método principal que inicia el juego
+    // Bloque de finalización del juego
+    // Método para mostrar la puntuación final y los números acertados por cada jugador
+    //Finalización del juego: Método finalizarJuego para mostrar la puntuación final y los números acertados por cada jugador.
+    public static void finalizarJuego() {
+        System.out.println("\nPUNTUACIÓN FINAL");
+        System.out.println("Jugador1:  " + puntosJugador1 + " puntos.");
+        System.out.println("Números acertados del jugador 1: ");
+        for (int i = 0; i < puntuacionJugador1.length; i++) {
+            if (puntuacionJugador1[i] != 0) {
+                System.out.print(puntuacionJugador1[i] + " ");
+            }
+        }
+        System.out.println("\nJugador2:  " + puntosJugador2 + " puntos.");
+        System.out.println("Números acertados del jugador 2: ");
+        for (int i = 0; i < puntuacionJugador2.length; i++) {
+            if (puntuacionJugador2[i] != 0) {
+                System.out.print(puntuacionJugador2[i] + " ");
+            }
+        }
+    }
+
+    // Bloque principal
+    // Método principal para iniciar el juego
+    //Método principal: Método main para iniciar el juego.
     public static void main(String[] args) {
-        RellenarArray(); // Rellenar el tablero con números
-        int[][] puntuaciones = new int[2][8]; // Array de puntuaciones para dos jugadores
-        int jugadorActual = 0; // 0 para el primer jugador, 1 para el segundo jugador
-
-        // Bucle principal del juego
-        while (true) {
-            chequearNumeros(puntuaciones, jugadorActual); // Turno del jugador actual
-            if (contarPuntuaciones(puntuaciones[jugadorActual]) == 5) { // Comprobar si el jugador ha ganado
-                System.out.println("¡Felicidades Jugador " + (jugadorActual + 1) + "! Has ganado el juego.");
-                break; // Salir del bucle si hay un ganador
-            }
-            jugadorActual = (jugadorActual + 1) % 2; // Cambiar de turno
-        }
+        RellenarArray();
+        chequearNumeros(tablero);
+        finalizarJuego();
     }
 }

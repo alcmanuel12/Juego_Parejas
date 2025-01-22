@@ -7,6 +7,11 @@ public class JuegoParejas {
 	private static String[][] tableroVisible = new String[filas][columnas];
 	private static int[] puntuacionJugador1 = new int[8];
 	private static int[] puntuacionJugador2 = new int[8];
+	private static int fila1, columna1, fila2, columna2;
+	private static boolean juegoEnCurso = true;
+	private static boolean turno1 = true;
+	private static int puntosJugador1 = 0;
+	private static int puntosJugador2 = 0;
 
 	public static void RellenarArray() {
 		System.out.println("Escriba 16 números para rellenar el tablero.");
@@ -18,19 +23,18 @@ public class JuegoParejas {
 			for (int j = 0; j < columnas; j++) {
 				tableroVisible[i][j] = "X";
 				boolean valido = false;
-					while (!valido) {
-						System.out.print("Introduce el número para la posición [" + i + "][" + j + "]: ");
-						int numero =  pedirNumero.nextInt();
-						
-						if (numero >= 1 && numero <= 8 && contador[numero] < 2) {
-							tablero[i][j] = numero;
-							contador[numero]++;
-							valido = true;
-						} else {
-							System.out.println(
-									"Número no válido. Debe estar entre 1 y 8, y no exceder dos repeticiones.");
-						}
+				while (!valido) {
+					System.out.print("Introduce el número para la posición [" + i + "][" + j + "]: ");
+					int numero = pedirNumero.nextInt();
+
+					if (numero >= 1 && numero <= 8 && contador[numero] < 2) {
+						tablero[i][j] = numero;
+						contador[numero]++;
+						valido = true;
+					} else {
+						System.out.println("Número no válido. Debe estar entre 1 y 8, y no exceder dos repeticiones.");
 					}
+				}
 			}
 		}
 		mostrarTablero();
@@ -52,11 +56,7 @@ public class JuegoParejas {
 
 	public static void chequearNumeros(int[][] tablero) {
 		Scanner checker = new Scanner(System.in);
-		int fila1, columna1, fila2, columna2;
-		boolean juegoEnCurso = true;
-		boolean turno1 = true;
-		int puntosJugador1 = 0;
-		int puntosJugador2 = 0;
+
 		while (juegoEnCurso == true) {
 			while (juegoEnCurso == true && turno1 == true) {
 				System.out.println("\nTURNO JUGADOR 1");
@@ -77,7 +77,7 @@ public class JuegoParejas {
 						System.out.println("-------------------------------------");
 						tableroVisible[fila1][columna1] = "0";
 						tableroVisible[fila2][columna2] = "0";
-						puntuacionJugador1[puntosJugador1] = 1;
+						puntuacionJugador1[puntosJugador1] = tablero[fila1][columna1];
 						puntosJugador1++;
 						System.out.println("El jugador 1 ahora tiene " + puntosJugador1 + " puntos.\n");
 						if (puntosJugador1 >= 5) {
@@ -117,7 +117,7 @@ public class JuegoParejas {
 						System.out.println("-------------------------------------");
 						tableroVisible[fila1][columna1] = "0";
 						tableroVisible[fila2][columna2] = "0";
-						puntuacionJugador1[puntosJugador2] = 1;
+						puntuacionJugador2[puntosJugador2] = tablero[fila1][columna1];
 						puntosJugador2++;
 						System.out.println("El jugador 2 ahora tiene " + puntosJugador2 + " puntos.\n");
 						if (puntosJugador2 >= 5) {
@@ -142,8 +142,27 @@ public class JuegoParejas {
 		checker.close();
 	}
 
+	public static void finalizarJuego() {
+		System.out.println("\nPUNTUACIÓN FINAL");
+		System.out.println("Jugador1:  " + puntosJugador1 + " puntos.");
+		System.out.println("Números acertados del jugador 1: ");
+		for (int i = 0; i < puntuacionJugador1.length; i++) {
+			if (puntuacionJugador1[i] != 0) {
+				System.out.print(puntuacionJugador1[i] + " ");
+			}
+		}
+		System.out.println("\nJugador2:  " + puntosJugador2 + " puntos.");
+		System.out.println("Números acertados del jugador 2: ");
+		for (int i = 0; i < puntuacionJugador2.length; i++) {
+			if (puntuacionJugador2[i] != 0) {
+				System.out.print(puntuacionJugador2[i] + " ");
+			}
+		}
+	}
+
 	public static void main(String[] args) {
 		RellenarArray();
 		chequearNumeros(tablero);
+		finalizarJuego();
 	}
 }

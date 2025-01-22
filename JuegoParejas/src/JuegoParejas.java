@@ -1,9 +1,42 @@
 import java.util.Scanner;
 
-public final class JuegoParejas {
+/**
+ * JuegoParejas is a memory game where players take turns to find matching pairs of numbers on a board.
+ * The game board is a 4x4 grid filled with numbers from 1 to 8, each appearing exactly twice.
+ * Players take turns to select two positions on the board, and if the numbers match, they score a point.
+ * The game ends when all pairs are found or one player reaches 5 points.
+ * 
+ * <p>This class contains methods to initialize the board, display the board, handle the game logic, and display the final scores.</p>
+ * 
+ * <p>Global Variables:</p>
+ * <ul>
+ * <li>filas: Number of rows in the board.</li>
+ * <li>columnas: Number of columns in the board.</li>
+ * <li>tablero: 2D array representing the hidden numbers on the board.</li>
+ * <li>tableroVisible: 2D array representing the visible state of the board.</li>
+ * <li>puntuacionJugador1: Array to store the numbers found by player 1.</li>
+ * <li>puntuacionJugador2: Array to store the numbers found by player 2.</li>
+ * <li>fila1, columna1, fila2, columna2: Variables to store the positions selected by players.</li>
+ * <li>juegoEnCurso: Boolean to indicate if the game is still ongoing.</li>
+ * <li>turno1: Boolean to indicate if it's player 1's turn.</li>
+ * <li>puntosJugador1: Points scored by player 1.</li>
+ * <li>puntosJugador2: Points scored by player 2.</li>
+ * </ul>
+ * 
+ * <p>Methods:</p>
+ * <ul>
+ * <li>{@code RellenarArray()}: Fills the board with numbers provided by the user.</li>
+ * <li>{@code mostrarTablero()}: Displays the current state of the visible board.</li>
+ * <li>{@code chequearNumeros(int[][] tablero)}: Handles the game logic, including player turns and checking for matching pairs.</li>
+ * <li>{@code finalizarJuego()}: Displays the final scores and the numbers found by each player.</li>
+ * <li>{@code main(String[] args)}: The main method to start the game.</li>
+ * </ul>
+ */ 
     // Bloque de declaración de variables
     // Variables estáticas globales para el juego
     //Declaración de variables: Define las variables estáticas globales que se utilizan en el juego.
+public final class JuegoParejas {
+
     public static int filas = 4;
     public static int columnas = 4;
     private static int[][] tablero = new int[filas][columnas];

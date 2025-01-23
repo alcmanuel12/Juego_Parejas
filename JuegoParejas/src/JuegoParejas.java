@@ -53,7 +53,7 @@ public class JuegoParejas {
 			}
 		}
 	}
-
+	
 	public static void chequearNumeros(int[][] tablero) {
 		Scanner checker = new Scanner(System.in);
 

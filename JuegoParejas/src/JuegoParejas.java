@@ -1,12 +1,11 @@
 import java.util.Scanner;
 
 /**
- * JuegoParejas is a memory game where players take turns to find matching pairs of numbers on a board.
- * The game board is a 4x4 grid filled with numbers from 1 to 8, each appearing exactly twice.
- * Players take turns to select two positions on the board, and if the numbers match, they score a point.
- * The game ends when all pairs are found or one player reaches 5 points.
- * 
- * <p>This class contains methods to initialize the board, display the board, handle the game logic, and display the final scores.</p>
+JuegoParejas es un juego de memoria en el que los jugadores se turnan para encontrar pares de números coincidentes en un tablero.
+* El tablero de juego es una cuadrícula de 4x4 llena de números del 1 al 8, cada uno de los cuales aparece exactamente dos veces.
+* Los jugadores se turnan para seleccionar dos posiciones en el tablero y, si los números coinciden, ganan un punto.
+* El juego termina cuando se encuentran todos los pares o cuando un jugador alcanza los 5 puntos.
+* Esta clase contiene métodos para inicializar el tablero, mostrar el tablero, gestionar la lógica del juego y mostrar las puntuaciones finales.
  * 
  * <p>Global Variables:</p>
  * <ul>
